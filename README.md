@@ -1,2 +1,4 @@
-# psconfeu2025_scriptblock
-Materials for the PowerShell ScriptBlock Talk at psconf.eu 2025 in Malmö
+# psconf.eu2025: Small, Powerful, and soon your best friend: ScriptBlocks
+
+This repo serves as code base for the session.
+
