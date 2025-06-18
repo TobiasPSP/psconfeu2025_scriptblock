@@ -1,4 +1,4 @@
-# psconf.eu2025: Small, Powerful, and soon your best friend: ScriptBlocks
+# psconf.eu2025: Small, Powerful, and Soon Your Best Friend: ScriptBlocks
 
 > Someone’s got to do the work, let it better not be you.
 > In this entertaining session spiced with plenty of code examples to take away, Tobias explains why scriptblocks really *are* the essence of PowerShell, and how you can use them to your advantage for scoping, streaming, code analysis, build time capsules, and more.
