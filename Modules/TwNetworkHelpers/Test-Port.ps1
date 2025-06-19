@@ -4,17 +4,19 @@
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory, Position=0, ValueFromPipeline)]
+        [Parameter(Mandatory, ValueFromPipeline)]
         [string]
         $ComputerName,
         
-        [Parameter(Mandatory, Position=1)]
+        [Parameter(Mandatory)]
         [int]
         $Port,
         
-        [Parameter(Position=2)]
         [int]
-        $TimeoutMilliSec = 1000
+        $TimeoutMilliSec = 1000,
+        
+        [Switch]
+        $ResolveIp
     )
     
     process
@@ -40,6 +42,18 @@
         {
             $client.Close()
             $client.Dispose()
+        }
+        
+        if ($success -and $ResolveIp)
+        {
+            try
+            {
+                $ComputerName = [System.Net.Dns]::GetHostEntry($ComputerName).HostName
+            }
+            catch
+            {
+            
+            }
         }
     
         [PSCustomObject]@{

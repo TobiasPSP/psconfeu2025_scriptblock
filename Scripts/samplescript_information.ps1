@@ -1,7 +1,7 @@
 ﻿
 
-Write-Information "Info"
-  "Hello"
-  start-sleep -Seconds 3
-  Write-Information "Alarm!"
-  5*12/8
+Write-Host 'Starting...'
+Start-Sleep -Seconds 1 # simulating some time-consuming action
+Write-Host -ForegroundColor Red "Simulating some alert message"
+Write-Host 'Done.'
+return 5*12/8  # returning some result

@@ -4,6 +4,8 @@
 # you can as well COPY the module folders to any of the monitored folder paths specified in $env:psmodulepath
 
 $rootFolder = $PSScriptRoot | Split-Path
+$picturePath = Join-Path -Path $rootFolder -ChildPath SamplePics
+
 <#
 I am adding the module folder with the presentation modules
 temporarily to the $env:PSModulePath variable to not mess

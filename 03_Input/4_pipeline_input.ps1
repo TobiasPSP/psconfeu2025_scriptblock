@@ -43,32 +43,3 @@ function Limit-Running
 { process { if($_.Status -eq 'Running') { $_ } }}
 
 Get-Service | Limit-Running
-
-
-# manually accessing BEGIN, PROCESS, END
-function test3
-{ 
-     begin { Write-Host "Ready to go!" -ForegroundColor Yellow }
-     process {"receiving $_"} 
-     end { Write-Host "COMPLETED." -ForegroundColor Red }
- }
- 
- 1..10 | test3
- 
- 
- 
-$pipeline = { test3 }.GetSteppablePipeline()
-$pipeline.begin($true)
-$pipeline.Process('AABC')
-$pipeline.Process('Test')
-$pipeline.End()
-$pipeline.Dispose() # free memory
-
-$pipeline = { Out-GridView }.GetSteppablePipeline()
-$pipeline.begin($true)
-
-$pipeline.Process('AABC')
-$pipeline.Process('Test')
-
-$pipeline.End()
-$pipeline.Dispose() # free memory
