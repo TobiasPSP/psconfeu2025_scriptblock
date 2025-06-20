@@ -2,6 +2,11 @@
 & { Get-Hotfix } 
 . { Get-Hotfix } 
 
+# but WHY? Why not like this:
+(Get-Hotfix)
+Get-Hotfix
+
+
 # run them LATER:
 function test {
     'This is a test'
