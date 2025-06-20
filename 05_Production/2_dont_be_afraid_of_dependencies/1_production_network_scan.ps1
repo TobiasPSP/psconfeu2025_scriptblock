@@ -24,7 +24,3 @@ Get-Ipv4Segment -From 192.168.2.1 -To 192.168.4.230 |
     } -ThrottleLimit 128 -UseLocalVariables <#-Verbose#> | 
     Where-Object Response #|
     #Get-NetworkPrinterInfo 
-    
-
-
-#Get-Ipv4Segment -From 192.168.2.1 -To 192.168.4.230 | Measure-Object
