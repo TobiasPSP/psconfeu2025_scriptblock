@@ -22,14 +22,22 @@ $20Numbers = foreach($item in (1..10000))
 
 $20Numbers.Count
 $20Numbers
-<#
-        "normal" loops have control statements such as "break" that can ABORT the loop
-        when a condition is met.
 
-        Pipelines have no such thing.
 
-        Except if you add it with the knowledge you now have:
-#>
+
+# the best it gets with the pipeline is this:
+$result = 1..100000 | ForEach-Object  {
+    $dividableByThree = $_ % 3 -eq 0
+    
+    if ($dividableByThree)
+    {
+        $counter++
+        $_
+    }
+} | Select-Object -First 20
+
+
+# keeping a private "Select-Object" around to stop the pipeline:
 
 
 function Stop-Pipeline
@@ -41,20 +49,14 @@ function Stop-Pipeline
     $steppablePipeline.End()
 }
 
-# assume we have a lot of input data 
-# we would like to ABORT the pipeline operation once we gathered 
-# 20 numbers that are evenly dividable by 3
+# real world problem:
+Get-EventLog -LogName System -After '2025-06-22'  # get-eventlog is deprecated, use get-winevent!
+Get-EventLog -LogName System -After '2025-06-22' | Foreach-Object { if ($_.TimeGenerated -lt '2025-06-22') { Stop-Pipeline}}
 
 
-$result = 1..100000 | ForEach-Object -Begin { $counter = 0 } -process {
-    $dividableByThree = $_ % 3 -eq 0
+
+$result = 1..100000 | ForEach-Object {
     
-    if ($dividableByThree)
-    {
-        $counter++
-        $_
-    }
-    # do we have 20?
     if ($counter -ge 20)
     {
         # yes, abort pipeline!
