@@ -1,5 +1,27 @@
+$counter = 0
+$20Numbers = foreach($item in (1..10000))
+{
+    # is the current number in $item
+    # dividable by 3?
+    $dividableByThree = $item % 3 -eq 0
+    
+    if ($dividableByThree)
+    {
+        # yes, increment counter
+        $counter++
+        # return value
+        $item
+    }
+    # do we have 20?
+    if ($counter -ge 20)
+    {
+        # yes, abort
+        break
+    }
+}
 
-
+$20Numbers.Count
+$20Numbers
 <#
         "normal" loops have control statements such as "break" that can ABORT the loop
         when a condition is met.
