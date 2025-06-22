@@ -8,7 +8,8 @@ Get-Hotfix
 
 
 # run them LATER:
-function test {
+function test 
+{
     'This is a test'
 }
 
