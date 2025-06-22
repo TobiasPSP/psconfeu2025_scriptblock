@@ -1,5 +1,5 @@
-﻿$ipFromBytes = ('192.168.2.1' -as [IPAddress]).GetAddressBytes()
-$ipToBytes = ('192.168.4.230' -as [IPAddress]).GetAddressBytes()
+﻿$ipFromBytes = ('10.30.2.1' -as [IPAddress]).GetAddressBytes()
+$ipToBytes = ('10.30.3.230' -as [IPAddress]).GetAddressBytes()
 [array]::Reverse($ipFromBytes)
 [array]::Reverse($ipToBytes)
 $start=[BitConverter]::ToUInt32($ipFromBytes, 0)

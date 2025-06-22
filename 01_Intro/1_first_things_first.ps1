@@ -1,15 +1,11 @@
 ﻿
-# () : Code that is executed immediately
+
+# () : Code is executed IMMEDIATELY
 
 (Get-Date)
 (Get-Date).AddMinutes(30)
 
 
-# {} : Code that is NOT executed immediately
+# {} : Code is executed NOT IMMEDIATELY
 
 { Get-Date }
-
-<#
-Scriptblocks are containers for *valid* PowerShell code.
-When you DEFINE a scriptblock using {}, the PowerShell parser is invoked (when you RUN a scriptblock, the code is already parsed).
-#>
