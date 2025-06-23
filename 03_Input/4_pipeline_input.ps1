@@ -1,4 +1,4 @@
-﻿# "magic" variables revisited:
+﻿# "magic" variables REVISITED:
 
 & { "> $args <"} 1 2 3 4 5 6 7 8 9 10
 1..10 | & { $args }  ## huh? WRONG!
