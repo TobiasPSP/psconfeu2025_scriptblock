@@ -1,5 +1,5 @@
 ﻿# "magic" variables: $_, $args, $input
-$ofs = ","
+
 & { "> $args <"} 1 2 3 4 5 6 7 8 9 10
 1..10 | & { "> $input <" }
 1..10 | Foreach-Object { "> $_ <"}
