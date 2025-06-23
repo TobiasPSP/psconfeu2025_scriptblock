@@ -46,6 +46,7 @@ function test
     param
     (
         [Parameter(Mandatory)]
+        [string]
         $YouMustFeedMe, 
 
         [Parameter(ValueFromPipeline)]
