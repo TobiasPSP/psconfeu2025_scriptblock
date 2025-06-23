@@ -7,6 +7,7 @@
 1..10 | & { process { "> $_ <"} }
 
 # we must talk about SCRIPTBLOCK COMPARTMENTS: begin, process, end
+{ $_ }.Ast | Select-Object BeginBlock, ProcessBlock, EndBlock
 
 # $_       : individual pipeline element in PROCESS block
 # $input   : all received pipeline input in END block (enumerator, can only be read ONCE)

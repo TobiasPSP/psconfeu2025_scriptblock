@@ -1,10 +1,4 @@
-﻿
-# use case:
-
-
-<#
-        IMPORTANT: 
-
+﻿<#
         | Feature                   | no param() | param() | param() + Attribute |
         | ------------------------- | ---------- | ------- | ------------------- |
         | Common Parameter          |      -     |    -    |         yes         |

@@ -20,10 +20,11 @@ Invoke-Command -ScriptBlock { "Received $args from source computer" } -ArgumentL
     ) 
     
     Write-Host "I received `$Parameter1 = $Parameter1 and `$Parameter2 = $Parameter2."
-    
+    # any argument submitted beyond what the param() take will STILL spill over in $args:
+    "More than I could eat: $args"    
     
     return $Parameter1, $Parameter2 
-} 1 2
+} 1 2 spillover I cannot handle this 
 
 # when you add the parameter names to your arguments, then the ORDER
 # in which they are specified becomes irrelevant:
@@ -39,67 +40,27 @@ Invoke-Command -ScriptBlock { "Received $args from source computer" } -ArgumentL
     return $Parameter1, $Parameter2 
 } -Parameter2 2 -Parameter1 1
 
-# use case:
-Invoke-Command -ScriptBlock { "Received credential $($args[0]) from source computer" } -ArgumentList (Get-Credential) #-ComputerName server1, server2, server3
-Invoke-Command -ScriptBlock { param($cred) "Received credential $cred from source computer" } -ArgumentList (Get-Credential) #-ComputerName server1, server2, server3
-
-
-<#
-        IMPORTANT: 
-
-        | Feature                   | no param() | param() | param() + Attribute |
-        | ------------------------- | ---------- | ------- | ------------------- |
-        | Common Parameter          |      -     |    -    |         yes         |
-        | $PSBoundParameters        |      -     |   yes   |         yes         |
-        | $PSCmdlet                 |      -     |    -    |         yes         |
-        | $PSDefaultParameterValues |      -     |    -    |         yes         |
-
-
-#>
-
-function WithoutParam
-{
-    $PSBoundParameters                                                      # not supported
-    $PSCmdlet.ShouldProcess($env:COMPUTERNAME, "doing something")           # not supported
-    $args
-}
-WithoutParam 1 2 3 
-
-function WithParam
+# using attributes:
+function test
 {
     param
     (
-        $Parameter1,
-        
-        $Parameter2
-    )
-    $PSBoundParameters                                                      # supported
-    $PSCmdlet.ShouldProcess($env:COMPUTERNAME, "doing something")           # not supported
-    $Parameter1, $Parameter2
-}
-WithParam 1 2  
+        [Parameter(Mandatory)]
+        $YouMustFeedMe, 
 
+        [Parameter(ValueFromPipeline)]
+        $AnySide
+    ) 
 
-function WithParamAndAttribute
-{
-    [CmdletBinding(SupportsShouldProcess)]
-    param
-    (
-        $Parameter1,
-        
-        $Parameter2
-    )
-    $PSBoundParameters                                                      # supported
-    $PSCmdlet.ShouldProcess($env:COMPUTERNAME, "doing something")           # supported
-    $Parameter1, $Parameter2
-}
+    process
+    {
+        "Anyside receiving $AnySide"
 
-WithParamAndAttribute 1 2  
-WithParamAndAttribute 1 2 -WhatIf
+    }
+} 
 
+test -AnySide 1
+1..10 | test -YouMustFeedMe "eat this"
+# fails now:
+test -AnySide 1 -YouMustFeedMe ok 1 2 3  # no automatic spillover in $args anymore
 
-<#
-        CONCLUSION:
-        - param() provides best control
-        - add Attributes for even more granular control
-#>
