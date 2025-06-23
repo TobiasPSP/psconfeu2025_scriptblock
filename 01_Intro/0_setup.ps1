@@ -5,6 +5,7 @@
 
 $rootFolder = $PSScriptRoot | Split-Path
 $picturePath = Join-Path -Path $rootFolder -ChildPath SamplePics
+$ofs = ','
 
 <#
 I am adding the module folder with the presentation modules

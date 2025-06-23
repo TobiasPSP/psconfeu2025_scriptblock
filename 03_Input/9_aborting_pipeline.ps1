@@ -35,11 +35,9 @@ $result = 1..100000 | ForEach-Object  {
         $_
     }
 } | Select-Object -First 20
-
+# Select-Object is actively breaking the pipeline once it has the requested numbers
 
 # keeping a private "Select-Object" around to stop the pipeline:
-
-
 function Stop-Pipeline
 {
     $sb = { Select-Object -First 1 }
@@ -49,28 +47,16 @@ function Stop-Pipeline
     $steppablePipeline.End()
 }
 
-# real world problem:
-Get-EventLog -LogName System -After '2025-06-22'  # get-eventlog is deprecated, use get-winevent!
-Get-EventLog -LogName System -After '2025-06-22' | Foreach-Object { if ($_.TimeGenerated -lt '2025-06-22') { Stop-Pipeline}}
-
-
-
 $result = 1..100000 | ForEach-Object {
     
-    if ($counter -ge 20)
+    $someInput = Show-InputBox -Prompt 'EOF ends pipeline' -Title 'Really Slow Database Simulator' -ButtonOkText 'Submit' -ButtonCancelText 'Bail Out'
+    if ($someInput -like '*EOF*')
     {
         # yes, abort pipeline!
         Stop-Pipeline
     }
+    $someInput
 }
 
 $result.Count
 $result
-
-# Here is what we are simulating with Stop-Pipeline:
-1..1000 | Select-Object -First 20
-
-# FINDING: Select-Object CAN abort the pipeline when it has seen the number of elements -First specifies
-# So by invoking Select-Object in an external steppable pipeline, we can make it EMIT the STOP SIGNAL
-# since it occurs INSIDE our own pipeline, it ABORTS the pipeline
-

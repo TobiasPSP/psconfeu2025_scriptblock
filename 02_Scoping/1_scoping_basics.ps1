@@ -12,7 +12,8 @@ $myresult = 1
     #    and appear to be "restored" (when in reality, they never changed)
 }
 
-# parent scope variables remain untouched by scriptblock:
+# parent scope variables remain untouched by scriptblock
+# no "magic cleaning", rather a "diaper" that gets thrown away
 $myvalue
 $myresult
 
