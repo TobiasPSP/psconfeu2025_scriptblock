@@ -1,12 +1,12 @@
-﻿# by default, scriptblocks receive arguments in $args (POSITIONAL array)
+﻿# "magic" variables: $_, $args, $input
+$ofs = ","
+& { "> $args <"} 1 2 3 4 5 6 7 8 9 10
+1..10 | & { "> $input <" }
+1..10 | Foreach-Object { "> $_ <"}
+1..10 | & { process { "> $_ <"} }
 
-& { 
-    Write-Host "I received $($args.Count) arguments: $args"
-    
-    return $args
-} 1 2
 
-# use case:
+# use cases:
 Invoke-Command -ScriptBlock { "Received $args from source computer" } -ArgumentList (1..10) #-ComputerName server1, server2, server3
 
 
